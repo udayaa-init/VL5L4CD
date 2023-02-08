@@ -1,0 +1,711 @@
+ARM GAS  C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"platform.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.VL53L4CD_RdDWord,"ax",%progbits
+  20              		.align	1
+  21              		.global	VL53L4CD_RdDWord
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	VL53L4CD_RdDWord:
+  27              	.LVL0:
+  28              	.LFB130:
+  29              		.file 1 "Core/Src/platform.c"
+   1:Core/Src/platform.c **** /*******************************************************************************
+   2:Core/Src/platform.c **** *
+   3:Core/Src/platform.c **** * Copyright (c) 2020 STMicroelectronics - All Rights Reserved
+   4:Core/Src/platform.c **** *
+   5:Core/Src/platform.c **** * License terms: STMicroelectronics Proprietary in accordance with licensing
+   6:Core/Src/platform.c **** * terms at www.st.com/sla0081
+   7:Core/Src/platform.c **** *
+   8:Core/Src/platform.c **** * STMicroelectronics confidential
+   9:Core/Src/platform.c **** * Reproduction and Communication of this document is strictly prohibited unless
+  10:Core/Src/platform.c **** * specifically authorized in writing by STMicroelectronics.
+  11:Core/Src/platform.c **** *
+  12:Core/Src/platform.c **** *******************************************************************************/
+  13:Core/Src/platform.c **** 
+  14:Core/Src/platform.c **** #include "platform.h"
+  15:Core/Src/platform.c **** 
+  16:Core/Src/platform.c **** extern I2C_HandleTypeDef 	hi2c1;
+  17:Core/Src/platform.c **** 
+  18:Core/Src/platform.c **** uint8_t VL53L4CD_RdDWord(uint16_t dev, uint16_t RegisterAdress, uint32_t *value)
+  19:Core/Src/platform.c **** {
+  30              		.loc 1 19 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 8
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 19 1 is_stmt 0 view .LVU1
+  35 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 20
+  38              		.cfi_offset 4, -20
+  39              		.cfi_offset 5, -16
+ARM GAS  C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s 			page 2
+
+
+  40              		.cfi_offset 6, -12
+  41              		.cfi_offset 7, -8
+  42              		.cfi_offset 14, -4
+  43 0002 85B0     		sub	sp, sp, #20
+  44              	.LCFI1:
+  45              		.cfi_def_cfa_offset 40
+  46 0004 0446     		mov	r4, r0
+  47 0006 1546     		mov	r5, r2
+  20:Core/Src/platform.c **** 	uint8_t status = 0;
+  48              		.loc 1 20 2 is_stmt 1 view .LVU2
+  49              	.LVL1:
+  21:Core/Src/platform.c **** 	uint8_t data_write[2];
+  50              		.loc 1 21 2 view .LVU3
+  22:Core/Src/platform.c **** 	uint8_t data_read[4];
+  51              		.loc 1 22 2 view .LVU4
+  23:Core/Src/platform.c **** 
+  24:Core/Src/platform.c **** 	data_write[0] = (RegisterAdress >> 8) & 0xFF;
+  52              		.loc 1 24 2 view .LVU5
+  53              		.loc 1 24 16 is_stmt 0 view .LVU6
+  54 0008 0B0A     		lsrs	r3, r1, #8
+  55 000a 8DF80C30 		strb	r3, [sp, #12]
+  25:Core/Src/platform.c **** 	data_write[1] = RegisterAdress & 0xFF;
+  56              		.loc 1 25 2 is_stmt 1 view .LVU7
+  57              		.loc 1 25 16 is_stmt 0 view .LVU8
+  58 000e 8DF80D10 		strb	r1, [sp, #13]
+  26:Core/Src/platform.c **** 	status = HAL_I2C_Master_Transmit(&hi2c1, dev, data_write, 2, 100);
+  59              		.loc 1 26 2 is_stmt 1 view .LVU9
+  60              		.loc 1 26 11 is_stmt 0 view .LVU10
+  61 0012 104E     		ldr	r6, .L3
+  62 0014 6427     		movs	r7, #100
+  63 0016 0097     		str	r7, [sp]
+  64 0018 0223     		movs	r3, #2
+  65 001a 03AA     		add	r2, sp, #12
+  66              	.LVL2:
+  67              		.loc 1 26 11 view .LVU11
+  68 001c 0146     		mov	r1, r0
+  69              	.LVL3:
+  70              		.loc 1 26 11 view .LVU12
+  71 001e 3046     		mov	r0, r6
+  72              	.LVL4:
+  73              		.loc 1 26 11 view .LVU13
+  74 0020 FFF7FEFF 		bl	HAL_I2C_Master_Transmit
+  75              	.LVL5:
+  27:Core/Src/platform.c **** 	status = HAL_I2C_Master_Receive(&hi2c1, dev, data_read, 4, 100);
+  76              		.loc 1 27 2 is_stmt 1 view .LVU14
+  77              		.loc 1 27 11 is_stmt 0 view .LVU15
+  78 0024 0097     		str	r7, [sp]
+  79 0026 0423     		movs	r3, #4
+  80 0028 02AA     		add	r2, sp, #8
+  81 002a 2146     		mov	r1, r4
+  82 002c 3046     		mov	r0, r6
+  83 002e FFF7FEFF 		bl	HAL_I2C_Master_Receive
+  84              	.LVL6:
+  28:Core/Src/platform.c **** 	*value =  ((data_read[0] << 24) | (data_read[1]<<16) |
+  85              		.loc 1 28 2 is_stmt 1 view .LVU16
+  86              		.loc 1 28 23 is_stmt 0 view .LVU17
+  87 0032 9DF80820 		ldrb	r2, [sp, #8]	@ zero_extendqisi2
+ARM GAS  C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s 			page 3
+
+
+  88              		.loc 1 28 46 view .LVU18
+  89 0036 9DF80930 		ldrb	r3, [sp, #9]	@ zero_extendqisi2
+  90              		.loc 1 28 49 view .LVU19
+  91 003a 1B04     		lsls	r3, r3, #16
+  92              		.loc 1 28 34 view .LVU20
+  93 003c 43EA0263 		orr	r3, r3, r2, lsl #24
+  29:Core/Src/platform.c **** 			(data_read[2]<<8)| (data_read[3]));
+  94              		.loc 1 29 14 view .LVU21
+  95 0040 9DF80A20 		ldrb	r2, [sp, #10]	@ zero_extendqisi2
+  28:Core/Src/platform.c **** 	*value =  ((data_read[0] << 24) | (data_read[1]<<16) |
+  96              		.loc 1 28 55 view .LVU22
+  97 0044 43EA0223 		orr	r3, r3, r2, lsl #8
+  98              		.loc 1 29 33 view .LVU23
+  99 0048 9DF80B20 		ldrb	r2, [sp, #11]	@ zero_extendqisi2
+ 100              		.loc 1 29 21 view .LVU24
+ 101 004c 1343     		orrs	r3, r3, r2
+  28:Core/Src/platform.c **** 	*value =  ((data_read[0] << 24) | (data_read[1]<<16) |
+ 102              		.loc 1 28 9 view .LVU25
+ 103 004e 2B60     		str	r3, [r5]
+  30:Core/Src/platform.c **** 	return status;
+ 104              		.loc 1 30 2 is_stmt 1 view .LVU26
+  31:Core/Src/platform.c **** }
+ 105              		.loc 1 31 1 is_stmt 0 view .LVU27
+ 106 0050 05B0     		add	sp, sp, #20
+ 107              	.LCFI2:
+ 108              		.cfi_def_cfa_offset 20
+ 109              		@ sp needed
+ 110 0052 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 111              	.LVL7:
+ 112              	.L4:
+ 113              		.loc 1 31 1 view .LVU28
+ 114              		.align	2
+ 115              	.L3:
+ 116 0054 00000000 		.word	hi2c1
+ 117              		.cfi_endproc
+ 118              	.LFE130:
+ 120              		.section	.text.VL53L4CD_RdWord,"ax",%progbits
+ 121              		.align	1
+ 122              		.global	VL53L4CD_RdWord
+ 123              		.syntax unified
+ 124              		.thumb
+ 125              		.thumb_func
+ 127              	VL53L4CD_RdWord:
+ 128              	.LVL8:
+ 129              	.LFB131:
+  32:Core/Src/platform.c **** 
+  33:Core/Src/platform.c **** uint8_t VL53L4CD_RdWord(uint16_t dev, uint16_t RegisterAdress, uint16_t *value)
+  34:Core/Src/platform.c **** {
+ 130              		.loc 1 34 1 is_stmt 1 view -0
+ 131              		.cfi_startproc
+ 132              		@ args = 0, pretend = 0, frame = 8
+ 133              		@ frame_needed = 0, uses_anonymous_args = 0
+ 134              		.loc 1 34 1 is_stmt 0 view .LVU30
+ 135 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 136              	.LCFI3:
+ 137              		.cfi_def_cfa_offset 20
+ 138              		.cfi_offset 4, -20
+ARM GAS  C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s 			page 4
+
+
+ 139              		.cfi_offset 5, -16
+ 140              		.cfi_offset 6, -12
+ 141              		.cfi_offset 7, -8
+ 142              		.cfi_offset 14, -4
+ 143 0002 85B0     		sub	sp, sp, #20
+ 144              	.LCFI4:
+ 145              		.cfi_def_cfa_offset 40
+ 146 0004 0446     		mov	r4, r0
+ 147 0006 1546     		mov	r5, r2
+  35:Core/Src/platform.c **** 	uint8_t status = 0;
+ 148              		.loc 1 35 2 is_stmt 1 view .LVU31
+ 149              	.LVL9:
+  36:Core/Src/platform.c **** 	uint8_t data_write[2];
+ 150              		.loc 1 36 2 view .LVU32
+  37:Core/Src/platform.c **** 	uint8_t data_read[2];
+ 151              		.loc 1 37 2 view .LVU33
+  38:Core/Src/platform.c **** 
+  39:Core/Src/platform.c **** 	data_write[0] = (RegisterAdress >> 8) & 0xFF;
+ 152              		.loc 1 39 2 view .LVU34
+ 153              		.loc 1 39 16 is_stmt 0 view .LVU35
+ 154 0008 0B0A     		lsrs	r3, r1, #8
+ 155 000a 8DF80C30 		strb	r3, [sp, #12]
+  40:Core/Src/platform.c **** 	data_write[1] = RegisterAdress & 0xFF;
+ 156              		.loc 1 40 2 is_stmt 1 view .LVU36
+ 157              		.loc 1 40 16 is_stmt 0 view .LVU37
+ 158 000e 8DF80D10 		strb	r1, [sp, #13]
+  41:Core/Src/platform.c **** 	status = HAL_I2C_Master_Transmit(&hi2c1, dev, data_write, 2, 100);
+ 159              		.loc 1 41 2 is_stmt 1 view .LVU38
+ 160              		.loc 1 41 11 is_stmt 0 view .LVU39
+ 161 0012 0C4E     		ldr	r6, .L7
+ 162 0014 6427     		movs	r7, #100
+ 163 0016 0097     		str	r7, [sp]
+ 164 0018 0223     		movs	r3, #2
+ 165 001a 03AA     		add	r2, sp, #12
+ 166              	.LVL10:
+ 167              		.loc 1 41 11 view .LVU40
+ 168 001c 0146     		mov	r1, r0
+ 169              	.LVL11:
+ 170              		.loc 1 41 11 view .LVU41
+ 171 001e 3046     		mov	r0, r6
+ 172              	.LVL12:
+ 173              		.loc 1 41 11 view .LVU42
+ 174 0020 FFF7FEFF 		bl	HAL_I2C_Master_Transmit
+ 175              	.LVL13:
+  42:Core/Src/platform.c **** 	status = HAL_I2C_Master_Receive(&hi2c1, dev, data_read, 2, 100);
+ 176              		.loc 1 42 2 is_stmt 1 view .LVU43
+ 177              		.loc 1 42 11 is_stmt 0 view .LVU44
+ 178 0024 0097     		str	r7, [sp]
+ 179 0026 0223     		movs	r3, #2
+ 180 0028 02AA     		add	r2, sp, #8
+ 181 002a 2146     		mov	r1, r4
+ 182 002c 3046     		mov	r0, r6
+ 183 002e FFF7FEFF 		bl	HAL_I2C_Master_Receive
+ 184              	.LVL14:
+  43:Core/Src/platform.c **** 	*value = (data_read[0] << 8) | (data_read[1]);
+ 185              		.loc 1 43 2 is_stmt 1 view .LVU45
+ 186              		.loc 1 43 21 is_stmt 0 view .LVU46
+ARM GAS  C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s 			page 5
+
+
+ 187 0032 9DF80820 		ldrb	r2, [sp, #8]	@ zero_extendqisi2
+ 188              		.loc 1 43 43 view .LVU47
+ 189 0036 9DF80930 		ldrb	r3, [sp, #9]	@ zero_extendqisi2
+ 190              		.loc 1 43 31 view .LVU48
+ 191 003a 43EA0223 		orr	r3, r3, r2, lsl #8
+ 192              		.loc 1 43 9 view .LVU49
+ 193 003e 2B80     		strh	r3, [r5]	@ movhi
+  44:Core/Src/platform.c **** 	return status;
+ 194              		.loc 1 44 2 is_stmt 1 view .LVU50
+  45:Core/Src/platform.c **** }
+ 195              		.loc 1 45 1 is_stmt 0 view .LVU51
+ 196 0040 05B0     		add	sp, sp, #20
+ 197              	.LCFI5:
+ 198              		.cfi_def_cfa_offset 20
+ 199              		@ sp needed
+ 200 0042 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 201              	.LVL15:
+ 202              	.L8:
+ 203              		.loc 1 45 1 view .LVU52
+ 204              		.align	2
+ 205              	.L7:
+ 206 0044 00000000 		.word	hi2c1
+ 207              		.cfi_endproc
+ 208              	.LFE131:
+ 210              		.section	.text.VL53L4CD_RdByte,"ax",%progbits
+ 211              		.align	1
+ 212              		.global	VL53L4CD_RdByte
+ 213              		.syntax unified
+ 214              		.thumb
+ 215              		.thumb_func
+ 217              	VL53L4CD_RdByte:
+ 218              	.LVL16:
+ 219              	.LFB132:
+  46:Core/Src/platform.c **** 
+  47:Core/Src/platform.c **** uint8_t VL53L4CD_RdByte(uint16_t dev, uint16_t RegisterAdress, uint8_t *value)
+  48:Core/Src/platform.c **** {
+ 220              		.loc 1 48 1 is_stmt 1 view -0
+ 221              		.cfi_startproc
+ 222              		@ args = 0, pretend = 0, frame = 8
+ 223              		@ frame_needed = 0, uses_anonymous_args = 0
+ 224              		.loc 1 48 1 is_stmt 0 view .LVU54
+ 225 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 226              	.LCFI6:
+ 227              		.cfi_def_cfa_offset 20
+ 228              		.cfi_offset 4, -20
+ 229              		.cfi_offset 5, -16
+ 230              		.cfi_offset 6, -12
+ 231              		.cfi_offset 7, -8
+ 232              		.cfi_offset 14, -4
+ 233 0002 85B0     		sub	sp, sp, #20
+ 234              	.LCFI7:
+ 235              		.cfi_def_cfa_offset 40
+ 236 0004 0446     		mov	r4, r0
+ 237 0006 1546     		mov	r5, r2
+  49:Core/Src/platform.c **** 	uint8_t status = 0;
+ 238              		.loc 1 49 2 is_stmt 1 view .LVU55
+ 239              	.LVL17:
+ARM GAS  C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s 			page 6
+
+
+  50:Core/Src/platform.c **** 	uint8_t data_write[2];
+ 240              		.loc 1 50 2 view .LVU56
+  51:Core/Src/platform.c **** 	uint8_t data_read[1];
+ 241              		.loc 1 51 2 view .LVU57
+  52:Core/Src/platform.c **** 
+  53:Core/Src/platform.c **** 	data_write[0] = (RegisterAdress >> 8) & 0xFF;
+ 242              		.loc 1 53 2 view .LVU58
+ 243              		.loc 1 53 16 is_stmt 0 view .LVU59
+ 244 0008 0B0A     		lsrs	r3, r1, #8
+ 245 000a 8DF80C30 		strb	r3, [sp, #12]
+  54:Core/Src/platform.c **** 	data_write[1] = RegisterAdress & 0xFF;
+ 246              		.loc 1 54 2 is_stmt 1 view .LVU60
+ 247              		.loc 1 54 16 is_stmt 0 view .LVU61
+ 248 000e 8DF80D10 		strb	r1, [sp, #13]
+  55:Core/Src/platform.c **** 	status = HAL_I2C_Master_Transmit(&hi2c1, dev, data_write, 2, 100);
+ 249              		.loc 1 55 2 is_stmt 1 view .LVU62
+ 250              		.loc 1 55 11 is_stmt 0 view .LVU63
+ 251 0012 0A4E     		ldr	r6, .L11
+ 252 0014 6427     		movs	r7, #100
+ 253 0016 0097     		str	r7, [sp]
+ 254 0018 0223     		movs	r3, #2
+ 255 001a 03AA     		add	r2, sp, #12
+ 256              	.LVL18:
+ 257              		.loc 1 55 11 view .LVU64
+ 258 001c 0146     		mov	r1, r0
+ 259              	.LVL19:
+ 260              		.loc 1 55 11 view .LVU65
+ 261 001e 3046     		mov	r0, r6
+ 262              	.LVL20:
+ 263              		.loc 1 55 11 view .LVU66
+ 264 0020 FFF7FEFF 		bl	HAL_I2C_Master_Transmit
+ 265              	.LVL21:
+  56:Core/Src/platform.c **** 	status = HAL_I2C_Master_Receive(&hi2c1, dev, data_read, 1, 100);
+ 266              		.loc 1 56 2 is_stmt 1 view .LVU67
+ 267              		.loc 1 56 11 is_stmt 0 view .LVU68
+ 268 0024 0097     		str	r7, [sp]
+ 269 0026 0123     		movs	r3, #1
+ 270 0028 02AA     		add	r2, sp, #8
+ 271 002a 2146     		mov	r1, r4
+ 272 002c 3046     		mov	r0, r6
+ 273 002e FFF7FEFF 		bl	HAL_I2C_Master_Receive
+ 274              	.LVL22:
+  57:Core/Src/platform.c **** 	*value = data_read[0];
+ 275              		.loc 1 57 2 is_stmt 1 view .LVU69
+ 276              		.loc 1 57 20 is_stmt 0 view .LVU70
+ 277 0032 9DF80830 		ldrb	r3, [sp, #8]	@ zero_extendqisi2
+ 278              		.loc 1 57 9 view .LVU71
+ 279 0036 2B70     		strb	r3, [r5]
+  58:Core/Src/platform.c **** 	return status;
+ 280              		.loc 1 58 2 is_stmt 1 view .LVU72
+  59:Core/Src/platform.c **** }
+ 281              		.loc 1 59 1 is_stmt 0 view .LVU73
+ 282 0038 05B0     		add	sp, sp, #20
+ 283              	.LCFI8:
+ 284              		.cfi_def_cfa_offset 20
+ 285              		@ sp needed
+ 286 003a F0BD     		pop	{r4, r5, r6, r7, pc}
+ARM GAS  C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s 			page 7
+
+
+ 287              	.LVL23:
+ 288              	.L12:
+ 289              		.loc 1 59 1 view .LVU74
+ 290              		.align	2
+ 291              	.L11:
+ 292 003c 00000000 		.word	hi2c1
+ 293              		.cfi_endproc
+ 294              	.LFE132:
+ 296              		.section	.text.VL53L4CD_WrByte,"ax",%progbits
+ 297              		.align	1
+ 298              		.global	VL53L4CD_WrByte
+ 299              		.syntax unified
+ 300              		.thumb
+ 301              		.thumb_func
+ 303              	VL53L4CD_WrByte:
+ 304              	.LVL24:
+ 305              	.LFB133:
+  60:Core/Src/platform.c **** 
+  61:Core/Src/platform.c **** uint8_t VL53L4CD_WrByte(uint16_t dev, uint16_t RegisterAdress, uint8_t value)
+  62:Core/Src/platform.c **** {
+ 306              		.loc 1 62 1 is_stmt 1 view -0
+ 307              		.cfi_startproc
+ 308              		@ args = 0, pretend = 0, frame = 8
+ 309              		@ frame_needed = 0, uses_anonymous_args = 0
+ 310              		.loc 1 62 1 is_stmt 0 view .LVU76
+ 311 0000 00B5     		push	{lr}
+ 312              	.LCFI9:
+ 313              		.cfi_def_cfa_offset 4
+ 314              		.cfi_offset 14, -4
+ 315 0002 85B0     		sub	sp, sp, #20
+ 316              	.LCFI10:
+ 317              		.cfi_def_cfa_offset 24
+  63:Core/Src/platform.c **** 	uint8_t data_write[3];
+ 318              		.loc 1 63 2 is_stmt 1 view .LVU77
+  64:Core/Src/platform.c **** 	uint8_t status = 0;
+ 319              		.loc 1 64 2 view .LVU78
+ 320              	.LVL25:
+  65:Core/Src/platform.c **** 
+  66:Core/Src/platform.c **** 	data_write[0] = (RegisterAdress >> 8) & 0xFF;
+ 321              		.loc 1 66 2 view .LVU79
+ 322              		.loc 1 66 16 is_stmt 0 view .LVU80
+ 323 0004 0B0A     		lsrs	r3, r1, #8
+ 324 0006 8DF80C30 		strb	r3, [sp, #12]
+  67:Core/Src/platform.c **** 	data_write[1] = RegisterAdress & 0xFF;
+ 325              		.loc 1 67 2 is_stmt 1 view .LVU81
+ 326              		.loc 1 67 16 is_stmt 0 view .LVU82
+ 327 000a 8DF80D10 		strb	r1, [sp, #13]
+  68:Core/Src/platform.c **** 	data_write[2] = value & 0xFF;
+ 328              		.loc 1 68 2 is_stmt 1 view .LVU83
+ 329              		.loc 1 68 16 is_stmt 0 view .LVU84
+ 330 000e 8DF80E20 		strb	r2, [sp, #14]
+  69:Core/Src/platform.c **** 	status = HAL_I2C_Master_Transmit(&hi2c1, dev, data_write, 3, 100);
+ 331              		.loc 1 69 2 is_stmt 1 view .LVU85
+ 332              		.loc 1 69 11 is_stmt 0 view .LVU86
+ 333 0012 6423     		movs	r3, #100
+ 334 0014 0093     		str	r3, [sp]
+ 335 0016 0323     		movs	r3, #3
+ARM GAS  C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s 			page 8
+
+
+ 336 0018 03AA     		add	r2, sp, #12
+ 337              	.LVL26:
+ 338              		.loc 1 69 11 view .LVU87
+ 339 001a 0146     		mov	r1, r0
+ 340              	.LVL27:
+ 341              		.loc 1 69 11 view .LVU88
+ 342 001c 0248     		ldr	r0, .L15
+ 343              	.LVL28:
+ 344              		.loc 1 69 11 view .LVU89
+ 345 001e FFF7FEFF 		bl	HAL_I2C_Master_Transmit
+ 346              	.LVL29:
+  70:Core/Src/platform.c **** 	return status;
+ 347              		.loc 1 70 2 is_stmt 1 view .LVU90
+  71:Core/Src/platform.c **** }
+ 348              		.loc 1 71 1 is_stmt 0 view .LVU91
+ 349 0022 05B0     		add	sp, sp, #20
+ 350              	.LCFI11:
+ 351              		.cfi_def_cfa_offset 4
+ 352              		@ sp needed
+ 353 0024 5DF804FB 		ldr	pc, [sp], #4
+ 354              	.L16:
+ 355              		.align	2
+ 356              	.L15:
+ 357 0028 00000000 		.word	hi2c1
+ 358              		.cfi_endproc
+ 359              	.LFE133:
+ 361              		.section	.text.VL53L4CD_WrWord,"ax",%progbits
+ 362              		.align	1
+ 363              		.global	VL53L4CD_WrWord
+ 364              		.syntax unified
+ 365              		.thumb
+ 366              		.thumb_func
+ 368              	VL53L4CD_WrWord:
+ 369              	.LVL30:
+ 370              	.LFB134:
+  72:Core/Src/platform.c **** 
+  73:Core/Src/platform.c **** uint8_t VL53L4CD_WrWord(uint16_t dev, uint16_t RegisterAdress, uint16_t value)
+  74:Core/Src/platform.c **** {
+ 371              		.loc 1 74 1 is_stmt 1 view -0
+ 372              		.cfi_startproc
+ 373              		@ args = 0, pretend = 0, frame = 8
+ 374              		@ frame_needed = 0, uses_anonymous_args = 0
+ 375              		.loc 1 74 1 is_stmt 0 view .LVU93
+ 376 0000 00B5     		push	{lr}
+ 377              	.LCFI12:
+ 378              		.cfi_def_cfa_offset 4
+ 379              		.cfi_offset 14, -4
+ 380 0002 85B0     		sub	sp, sp, #20
+ 381              	.LCFI13:
+ 382              		.cfi_def_cfa_offset 24
+  75:Core/Src/platform.c **** 	uint8_t data_write[4];
+ 383              		.loc 1 75 2 is_stmt 1 view .LVU94
+  76:Core/Src/platform.c **** 	uint8_t status = 0;
+ 384              		.loc 1 76 2 view .LVU95
+ 385              	.LVL31:
+  77:Core/Src/platform.c **** 	data_write[0] = (RegisterAdress >> 8) & 0xFF;
+ 386              		.loc 1 77 2 view .LVU96
+ARM GAS  C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s 			page 9
+
+
+ 387              		.loc 1 77 16 is_stmt 0 view .LVU97
+ 388 0004 0B0A     		lsrs	r3, r1, #8
+ 389 0006 8DF80C30 		strb	r3, [sp, #12]
+  78:Core/Src/platform.c **** 	data_write[1] = RegisterAdress & 0xFF;
+ 390              		.loc 1 78 2 is_stmt 1 view .LVU98
+ 391              		.loc 1 78 16 is_stmt 0 view .LVU99
+ 392 000a 8DF80D10 		strb	r1, [sp, #13]
+  79:Core/Src/platform.c **** 	data_write[2] = (value >> 8) & 0xFF;
+ 393              		.loc 1 79 2 is_stmt 1 view .LVU100
+ 394              		.loc 1 79 16 is_stmt 0 view .LVU101
+ 395 000e 130A     		lsrs	r3, r2, #8
+ 396 0010 8DF80E30 		strb	r3, [sp, #14]
+  80:Core/Src/platform.c **** 	data_write[3] = value & 0xFF;
+ 397              		.loc 1 80 2 is_stmt 1 view .LVU102
+ 398              		.loc 1 80 16 is_stmt 0 view .LVU103
+ 399 0014 8DF80F20 		strb	r2, [sp, #15]
+  81:Core/Src/platform.c **** 	status = HAL_I2C_Master_Transmit(&hi2c1, dev, data_write, 4, 100);
+ 400              		.loc 1 81 2 is_stmt 1 view .LVU104
+ 401              		.loc 1 81 11 is_stmt 0 view .LVU105
+ 402 0018 6423     		movs	r3, #100
+ 403 001a 0093     		str	r3, [sp]
+ 404 001c 0423     		movs	r3, #4
+ 405 001e 03AA     		add	r2, sp, #12
+ 406              	.LVL32:
+ 407              		.loc 1 81 11 view .LVU106
+ 408 0020 0146     		mov	r1, r0
+ 409              	.LVL33:
+ 410              		.loc 1 81 11 view .LVU107
+ 411 0022 0348     		ldr	r0, .L19
+ 412              	.LVL34:
+ 413              		.loc 1 81 11 view .LVU108
+ 414 0024 FFF7FEFF 		bl	HAL_I2C_Master_Transmit
+ 415              	.LVL35:
+  82:Core/Src/platform.c **** 	return status;
+ 416              		.loc 1 82 2 is_stmt 1 view .LVU109
+  83:Core/Src/platform.c **** }
+ 417              		.loc 1 83 1 is_stmt 0 view .LVU110
+ 418 0028 05B0     		add	sp, sp, #20
+ 419              	.LCFI14:
+ 420              		.cfi_def_cfa_offset 4
+ 421              		@ sp needed
+ 422 002a 5DF804FB 		ldr	pc, [sp], #4
+ 423              	.L20:
+ 424 002e 00BF     		.align	2
+ 425              	.L19:
+ 426 0030 00000000 		.word	hi2c1
+ 427              		.cfi_endproc
+ 428              	.LFE134:
+ 430              		.section	.text.VL53L4CD_WrDWord,"ax",%progbits
+ 431              		.align	1
+ 432              		.global	VL53L4CD_WrDWord
+ 433              		.syntax unified
+ 434              		.thumb
+ 435              		.thumb_func
+ 437              	VL53L4CD_WrDWord:
+ 438              	.LVL36:
+ 439              	.LFB135:
+ARM GAS  C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s 			page 10
+
+
+  84:Core/Src/platform.c **** 
+  85:Core/Src/platform.c **** uint8_t VL53L4CD_WrDWord(uint16_t dev, uint16_t RegisterAdress, uint32_t value)
+  86:Core/Src/platform.c **** {
+ 440              		.loc 1 86 1 is_stmt 1 view -0
+ 441              		.cfi_startproc
+ 442              		@ args = 0, pretend = 0, frame = 8
+ 443              		@ frame_needed = 0, uses_anonymous_args = 0
+ 444              		.loc 1 86 1 is_stmt 0 view .LVU112
+ 445 0000 00B5     		push	{lr}
+ 446              	.LCFI15:
+ 447              		.cfi_def_cfa_offset 4
+ 448              		.cfi_offset 14, -4
+ 449 0002 85B0     		sub	sp, sp, #20
+ 450              	.LCFI16:
+ 451              		.cfi_def_cfa_offset 24
+  87:Core/Src/platform.c **** 	uint8_t data_write[6];
+ 452              		.loc 1 87 2 is_stmt 1 view .LVU113
+  88:Core/Src/platform.c **** 	uint8_t status = 0;
+ 453              		.loc 1 88 2 view .LVU114
+ 454              	.LVL37:
+  89:Core/Src/platform.c **** 
+  90:Core/Src/platform.c **** 	data_write[0] = (RegisterAdress >> 8) & 0xFF;
+ 455              		.loc 1 90 2 view .LVU115
+ 456              		.loc 1 90 16 is_stmt 0 view .LVU116
+ 457 0004 0B0A     		lsrs	r3, r1, #8
+ 458 0006 8DF80830 		strb	r3, [sp, #8]
+  91:Core/Src/platform.c **** 	data_write[1] = RegisterAdress & 0xFF;
+ 459              		.loc 1 91 2 is_stmt 1 view .LVU117
+ 460              		.loc 1 91 16 is_stmt 0 view .LVU118
+ 461 000a 8DF80910 		strb	r1, [sp, #9]
+  92:Core/Src/platform.c **** 	data_write[2] = (value >> 24) & 0xFF;
+ 462              		.loc 1 92 2 is_stmt 1 view .LVU119
+ 463              		.loc 1 92 25 is_stmt 0 view .LVU120
+ 464 000e 130E     		lsrs	r3, r2, #24
+ 465              		.loc 1 92 16 view .LVU121
+ 466 0010 8DF80A30 		strb	r3, [sp, #10]
+  93:Core/Src/platform.c **** 	data_write[3] = (value >> 16) & 0xFF;
+ 467              		.loc 1 93 2 is_stmt 1 view .LVU122
+ 468              		.loc 1 93 25 is_stmt 0 view .LVU123
+ 469 0014 130C     		lsrs	r3, r2, #16
+ 470              		.loc 1 93 16 view .LVU124
+ 471 0016 8DF80B30 		strb	r3, [sp, #11]
+  94:Core/Src/platform.c **** 	data_write[4] = (value >> 8) & 0xFF;
+ 472              		.loc 1 94 2 is_stmt 1 view .LVU125
+ 473              		.loc 1 94 25 is_stmt 0 view .LVU126
+ 474 001a 130A     		lsrs	r3, r2, #8
+ 475              		.loc 1 94 16 view .LVU127
+ 476 001c 8DF80C30 		strb	r3, [sp, #12]
+  95:Core/Src/platform.c **** 	data_write[5] = value & 0xFF;
+ 477              		.loc 1 95 2 is_stmt 1 view .LVU128
+ 478              		.loc 1 95 16 is_stmt 0 view .LVU129
+ 479 0020 8DF80D20 		strb	r2, [sp, #13]
+  96:Core/Src/platform.c **** 	status = HAL_I2C_Master_Transmit(&hi2c1, dev, data_write, 6, 100);
+ 480              		.loc 1 96 2 is_stmt 1 view .LVU130
+ 481              		.loc 1 96 11 is_stmt 0 view .LVU131
+ 482 0024 6423     		movs	r3, #100
+ 483 0026 0093     		str	r3, [sp]
+ARM GAS  C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s 			page 11
+
+
+ 484 0028 0623     		movs	r3, #6
+ 485 002a 02AA     		add	r2, sp, #8
+ 486              	.LVL38:
+ 487              		.loc 1 96 11 view .LVU132
+ 488 002c 0146     		mov	r1, r0
+ 489              	.LVL39:
+ 490              		.loc 1 96 11 view .LVU133
+ 491 002e 0348     		ldr	r0, .L23
+ 492              	.LVL40:
+ 493              		.loc 1 96 11 view .LVU134
+ 494 0030 FFF7FEFF 		bl	HAL_I2C_Master_Transmit
+ 495              	.LVL41:
+  97:Core/Src/platform.c **** 	return status;
+ 496              		.loc 1 97 2 is_stmt 1 view .LVU135
+  98:Core/Src/platform.c **** }
+ 497              		.loc 1 98 1 is_stmt 0 view .LVU136
+ 498 0034 05B0     		add	sp, sp, #20
+ 499              	.LCFI17:
+ 500              		.cfi_def_cfa_offset 4
+ 501              		@ sp needed
+ 502 0036 5DF804FB 		ldr	pc, [sp], #4
+ 503              	.L24:
+ 504 003a 00BF     		.align	2
+ 505              	.L23:
+ 506 003c 00000000 		.word	hi2c1
+ 507              		.cfi_endproc
+ 508              	.LFE135:
+ 510              		.section	.text.WaitMs,"ax",%progbits
+ 511              		.align	1
+ 512              		.global	WaitMs
+ 513              		.syntax unified
+ 514              		.thumb
+ 515              		.thumb_func
+ 517              	WaitMs:
+ 518              	.LVL42:
+ 519              	.LFB136:
+  99:Core/Src/platform.c **** 
+ 100:Core/Src/platform.c **** uint8_t WaitMs(Dev_t dev, uint32_t time_ms)
+ 101:Core/Src/platform.c **** {
+ 520              		.loc 1 101 1 is_stmt 1 view -0
+ 521              		.cfi_startproc
+ 522              		@ args = 0, pretend = 0, frame = 0
+ 523              		@ frame_needed = 0, uses_anonymous_args = 0
+ 524              		.loc 1 101 1 is_stmt 0 view .LVU138
+ 525 0000 08B5     		push	{r3, lr}
+ 526              	.LCFI18:
+ 527              		.cfi_def_cfa_offset 8
+ 528              		.cfi_offset 3, -8
+ 529              		.cfi_offset 14, -4
+ 102:Core/Src/platform.c **** 	HAL_Delay(time_ms);
+ 530              		.loc 1 102 2 is_stmt 1 view .LVU139
+ 531 0002 0846     		mov	r0, r1
+ 532              	.LVL43:
+ 533              		.loc 1 102 2 is_stmt 0 view .LVU140
+ 534 0004 FFF7FEFF 		bl	HAL_Delay
+ 535              	.LVL44:
+ 103:Core/Src/platform.c **** 	return 0;
+ARM GAS  C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s 			page 12
+
+
+ 536              		.loc 1 103 2 is_stmt 1 view .LVU141
+ 104:Core/Src/platform.c **** }
+ 537              		.loc 1 104 1 is_stmt 0 view .LVU142
+ 538 0008 0020     		movs	r0, #0
+ 539 000a 08BD     		pop	{r3, pc}
+ 540              		.cfi_endproc
+ 541              	.LFE136:
+ 543              		.text
+ 544              	.Letext0:
+ 545              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 546              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 547              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
+ 548              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 549              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 550              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
+ 551              		.file 8 "Core/Inc/platform.h"
+ 552              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ARM GAS  C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 platform.c
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:20     .text.VL53L4CD_RdDWord:00000000 $t
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:26     .text.VL53L4CD_RdDWord:00000000 VL53L4CD_RdDWord
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:116    .text.VL53L4CD_RdDWord:00000054 $d
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:121    .text.VL53L4CD_RdWord:00000000 $t
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:127    .text.VL53L4CD_RdWord:00000000 VL53L4CD_RdWord
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:206    .text.VL53L4CD_RdWord:00000044 $d
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:211    .text.VL53L4CD_RdByte:00000000 $t
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:217    .text.VL53L4CD_RdByte:00000000 VL53L4CD_RdByte
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:292    .text.VL53L4CD_RdByte:0000003c $d
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:297    .text.VL53L4CD_WrByte:00000000 $t
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:303    .text.VL53L4CD_WrByte:00000000 VL53L4CD_WrByte
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:357    .text.VL53L4CD_WrByte:00000028 $d
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:362    .text.VL53L4CD_WrWord:00000000 $t
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:368    .text.VL53L4CD_WrWord:00000000 VL53L4CD_WrWord
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:426    .text.VL53L4CD_WrWord:00000030 $d
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:431    .text.VL53L4CD_WrDWord:00000000 $t
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:437    .text.VL53L4CD_WrDWord:00000000 VL53L4CD_WrDWord
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:506    .text.VL53L4CD_WrDWord:0000003c $d
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:511    .text.WaitMs:00000000 $t
+C:\Users\Dell\AppData\Local\Temp\ccav6zmJ.s:517    .text.WaitMs:00000000 WaitMs
+
+UNDEFINED SYMBOLS
+HAL_I2C_Master_Transmit
+HAL_I2C_Master_Receive
+hi2c1
+HAL_Delay
